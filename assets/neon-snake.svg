@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="200" height="200">
+  <defs>
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="5" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+  
+  <!-- Snake body segments - simple pixel style -->
+  <rect x="40" y="90" width="25" height="25" rx="3" fill="#00ffff" filter="url(#glow)"/>
+  <rect x="65" y="90" width="25" height="25" rx="3" fill="#00ddff" filter="url(#glow)"/>
+  <rect x="90" y="90" width="25" height="25" rx="3" fill="#00bbff" filter="url(#glow)"/>
+  <rect x="90" y="65" width="25" height="25" rx="3" fill="#0099ff" filter="url(#glow)"/>
+  <rect x="115" y="65" width="25" height="25" rx="3" fill="#0077ff" filter="url(#glow)"/>
+  <rect x="140" y="65" width="25" height="25" rx="3" fill="#0055ff" filter="url(#glow)"/>
+  <rect x="140" y="90" width="25" height="25" rx="3" fill="#3300ff" filter="url(#glow)"/>
+  <rect x="140" y="115" width="25" height="25" rx="3" fill="#7700ff" filter="url(#glow)"/>
+  <rect x="115" y="115" width="25" height="25" rx="3" fill="#bb00ff" filter="url(#glow)"/>
+  
+  <!-- Head -->
+  <rect x="90" y="115" width="25" height="25" rx="3" fill="#ff00ff" filter="url(#glow)"/>
+  <circle cx="96" cy="123" r="2" fill="#000000"/>
+  <circle cx="109" cy="123" r="2" fill="#000000"/>
+  
+  <!-- Food -->
+  <circle cx="52.5" cy="102.5" r="8" fill="#ff00ff" filter="url(#glow)"/>
+  <circle cx="52.5" cy="102.5" r="4" fill="#ffffff" opacity="0.8"/>
+</svg>
