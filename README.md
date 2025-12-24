@@ -39,7 +39,7 @@ Neon Snake est un jeu de serpent moderne avec des effets visuels néon et une ge
 - Modifiez les paramètres dans `game.js` (vitesse, couleurs, etc.)
 - Changez la musique ou les sons dans le dossier `assets`
 
-___
+---
 
 <a id="fr"></a>
 
