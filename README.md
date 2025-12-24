@@ -41,7 +41,7 @@ Neon Snake est un jeu de serpent moderne avec des effets visuels néon et une ge
 
 ---
 
-<a id="fr"></a>
+<a id="en"></a>
 
 ## 🇬🇧 How it works & Overview
 
