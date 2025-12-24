@@ -23,7 +23,7 @@ Neon Snake est un jeu de serpent moderne avec des effets visuels néon et une ge
 
 ### Démarrage
 
-1. Ouvrez `index.html` dans votre navigateur, ou rendez vous sur [cette page](https://2forgetitouan.github.io/Neon_Snake/)
+1. Ouvrez `index.html` dans votre navigateur, ou rendez-vous sur [cette page](https://2forgetitouan.github.io/Neon_Snake/)
 2. Cliquez sur "Start" pour jouer
 3. Utilisez les touches pour diriger le serpent
 
@@ -60,7 +60,7 @@ Neon Snake is a modern snake game with neon visual effects and advanced collisio
 
 ### Getting Started
 
-1. Open `index.html` in your browser
+1. Open `index.html` in your browser, or simply go to [this page](https://2forgetitouan.github.io/Neon_Snake/)
 2. Click "Start" to play
 3. Use the keys to control the snake
 
