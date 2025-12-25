@@ -59,6 +59,30 @@ const food = {
   glowIntensity: 0,
 };
 
+// Spawn helper: place snake randomly at least `margin` tiles from edges
+function spawnSnakeRandom(margin = 8) {
+  const startX =
+    margin + Math.floor(Math.random() * (CONFIG.tileCountX - margin * 2));
+  const startY =
+    margin + Math.floor(Math.random() * (CONFIG.tileCountY - margin * 2));
+  const dirs = [
+    { x: 1, y: 0 },
+    { x: -1, y: 0 },
+    { x: 0, y: 1 },
+    { x: 0, y: -1 },
+  ];
+  const dir = dirs[Math.floor(Math.random() * dirs.length)];
+  snake.body = [{ x: startX, y: startY }];
+  snake.direction = { ...dir };
+  snake.nextDirection = { ...dir };
+  // ensure render positions are set immediately to avoid visual jump/stuck
+  ensureRenderPositions();
+  if (snake.body[0]) {
+    snake.body[0].rx = snake.body[0].x * CONFIG.gridSize;
+    snake.body[0].ry = snake.body[0].y * CONFIG.gridSize;
+  }
+}
+
 // Particles for visual effects
 const particles = [];
 // Input queue to allow buffering quick turns
@@ -81,6 +105,7 @@ function ensureRenderPositions() {
     seg.rx = (seg.x || 0) * CONFIG.gridSize;
     seg.ry = (seg.y || 0) * CONFIG.gridSize;
   }
+  // console.log(`Render positions updated: head at rx=${snake.body[0].rx}, ry=${snake.body[0].ry}`);
 }
 
 // Initialize game
@@ -198,12 +223,11 @@ function init() {
     });
   });
 
+  // Ensure snake initial spawn is random at load
+  spawnSnakeRandom(8);
+  // Place food after snake spawns and prepare rendering
   generateFood();
-
-  // Ensure render positions for smooth interpolation
   ensureRenderPositions();
-
-  // Start render loop for smooth animations
   requestAnimationFrame(render);
 }
 
@@ -225,17 +249,24 @@ function startGame() {
 
 // Restart game
 function restartGame() {
-  const margin = 8;
-  const startX =
-    margin + Math.floor(Math.random() * (CONFIG.tileCountX - margin * 2));
-  const startY =
-    margin + Math.floor(Math.random() * (CONFIG.tileCountY - margin * 2));
-  snake.body = [{ x: startX, y: startY }];
-  snake.direction = { x: 1, y: 0 };
-  snake.nextDirection = { x: 1, y: 0 };
+  // spawn randomly with margin
+  spawnSnakeRandom(8);
   inputQueue.length = 0;
-
-  ensureRenderPositions();
+  // Clear any active grace timeouts and flags (avoid being bloqué après la mort)
+  if (snake.wallGraceTimeout) {
+    clearTimeout(snake.wallGraceTimeout);
+    snake.wallGraceTimeout = null;
+  }
+  if (snake.tailGraceTimeout) {
+    clearTimeout(snake.tailGraceTimeout);
+    snake.tailGraceTimeout = null;
+  }
+  snake.wallGraceActive = false;
+  snake.tailGraceActive = false;
+  // Reset render timing so animation resumes cleanly
+  if (!CONFIG.render) CONFIG.render = {};
+  CONFIG.render.accumulator = 0;
+  CONFIG.render.lastTime = 0;
   CONFIG.score = 0;
   CONFIG.level = 1;
   document.getElementById("score").textContent = CONFIG.score;
@@ -247,8 +278,8 @@ function restartGame() {
   CONFIG.baseSpeed = diff.startSpeed;
   CONFIG.currentSpeed = diff.startSpeed;
   CONFIG.isPaused = false;
-  CONFIG.render.accumulator = 0;
   CONFIG.render.lastUpdate = 0;
+  CONFIG.gameStarted = true;
   if (musicEnabled && musicAudio) {
     musicAudio.play().catch(() => {});
   }
@@ -743,16 +774,8 @@ function returnToStart() {
   CONFIG.gameStarted = false;
   CONFIG.isPaused = false;
   inputQueue.length = 0;
-  // Reset snake
-  const margin = 8;
-  const startX =
-    margin + Math.floor(Math.random() * (CONFIG.tileCountX - margin * 2));
-  const startY =
-    margin + Math.floor(Math.random() * (CONFIG.tileCountY - margin * 2));
-  snake.body = [{ x: startX, y: startY }];
-  snake.direction = { x: 1, y: 0 };
-  snake.nextDirection = { x: 1, y: 0 };
-  ensureRenderPositions();
+  // spawn randomly for start screen preview
+  spawnSnakeRandom(8);
   CONFIG.score = 0;
   CONFIG.level = 1;
   document.getElementById("score").textContent = CONFIG.score;
