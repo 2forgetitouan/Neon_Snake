@@ -65,11 +65,17 @@ body::before {
 }
 
 .container {
+    position: relative;
     text-align: center;
     z-index: 1;
     padding: 20px;
     max-width: 95vw;
     margin: 0 auto;
+}
+
+.page-frame {
+    position: relative;
+    width: 100%;
 }
 
 .logo-container {
@@ -238,27 +244,21 @@ body::before {
 }
 
 .audio-controls {
-        display: flex;
-        flex-direction: row;
-        align-items: center;
-        justify-content: flex-start;
-        gap: 24px;
-        margin-bottom: 24px;
-        width: 100vw;
-        left: 50%;
-        transform: translateX(-50%);
-        position: relative;
-    .audio-switches {
-        display: flex;
-        flex-direction: row;
-        gap: 24px;
-    }
-    margin-top: 20px;
     display: flex;
-    gap: 30px;
-    justify-content: center;
+    flex-direction: row;
     align-items: center;
+    justify-content: center;
+    gap: 24px;
+    margin-bottom: 24px;
+    width: 100%;
+    margin-top: 20px;
     flex-wrap: wrap;
+}
+
+.audio-controls .audio-switches {
+    display: flex;
+    flex-direction: row;
+    gap: 24px;
 }
 
 .audio-switch {
@@ -449,13 +449,21 @@ body::before {
 .github-link {
     position: absolute;
     right: 0;
-    top: 50%;
-    transform: translateY(-50%);
+    bottom: 20px;
+    z-index: 1000;
     margin: 0;
     padding: 0;
     width: auto;
     display: flex;
     align-items: center;
+    transition: transform 0.15s ease;
+}
+
+.github-link img,
+.github-logo {
+    display: block;
+    margin: 0;
+    padding: 0;
 }
 
 
